@@ -1,1 +1,1 @@
-web: gunicorn playwithbuddy:WSGI
+web: gunicorn playwithbuddy:app
