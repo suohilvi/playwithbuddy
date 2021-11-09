@@ -2,15 +2,15 @@ import os
 import click
 from flask_migrate import Migrate
 from app import create_app, db
-from app.models import User, Role
+from app.models import Role, User, Listing
+
 
 app = create_app('production' if os.environ.get('DYNO') else 'default')
 migrate = Migrate(app, db)
 
-
 @app.shell_context_processor
 def make_shell_context():
-    return dict(db=db, User=User, Role=Role)
+    return dict(db=db, User=User, Role=Role, Listing=Listing)
 
 
 @app.cli.command()
