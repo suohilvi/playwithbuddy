@@ -35,7 +35,10 @@ def login():
             login_user(user, form.remember_me.data)
             next = request.args.get('next')
             if next is None or not next.startswith('/'):
-                next = url_for('main.index')
+                if user.role_id == 1:
+                    next = url_for('main.admin')
+                else:
+                    next = url_for('main.user')
             return redirect(next)
         flash('Invalid email or password.')
     return render_template('auth/login.html', form=form)
@@ -55,7 +58,8 @@ def register():
     if form.validate_on_submit():
         user = User(email=form.email.data.lower(),
                     username=form.username.data,
-                    password=form.password.data)
+                    password=form.password.data,
+                    role_id=2)
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()

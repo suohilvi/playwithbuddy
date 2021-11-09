@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Flasky{% endblock %}
+{% block title %}Play with Buddy{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
-    <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+    <h1>Welcome to Play with Buddy service!</h1>
+</div>
+<div class="page-content">
+    <p>Here you can browse for likeminded friends to play your favourite games with. Get started by going on find buddy page and choose game</p>
+    <p>If you would like to participate in offering your friendship, please make an account and file an listing for your favourite game. Be the badass you wanna be.</p>
 </div>
 {% endblock %}

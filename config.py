@@ -14,7 +14,6 @@ class Config:
     APP_MAIL_SENDER = 'Play with Buddy Admin <PwB@gmail.com>'
     APP_ADMIN = os.environ.get('PWB_ADMIN')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
     @staticmethod
     def init_app(app):
         pass
@@ -23,15 +22,18 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
+    SSL_REDIRECT = False
 
 
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
+    SSL_REDIRECT = False
 
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SSL_REDIRECT = True
 
 
 config = {
