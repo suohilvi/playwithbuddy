@@ -14,15 +14,18 @@ class Role(db.Model):
     def __repr__(self):
         return '<Role %r>' % self.name
 
-
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
+    listings = db.relationship('Listing', backref='user', lazy='dynamic')
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
+    bio = db.Column(db.Text)
+    country = db.Column(db.String(64))
+    city = db.Column(db.String(128))
 
     @property
     def password(self):
@@ -98,3 +101,15 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+class Listing(db.Model):
+    __tablename__ = 'listings'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    header = db.Column(db.String(128))
+    game = db.Column(db.String(256))
+    platform = db.Column(db.String(64))
+    info = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Listing %r>' % self.header
