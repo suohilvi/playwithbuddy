@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Play with Buddy - Modify post{% endblock %}
+
+{% block page_content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Modify listing</h3>
+                </div>
+                <div class="panel-body">
+                    {{ wtf.quick_form(listform) }}
+                </div>
+              </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

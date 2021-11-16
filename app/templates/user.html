@@ -1,13 +1,77 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}Play with Buddy - User area{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
-    <h1>Add your listing!</h1>
+  <h1 class="text-center">Modify user details and your listing!</h1>
 </div>
-<div class="page-content">
-    <p>Add game here</p>
-    <p>Add short game specific info.</p>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">User {{current_user.username}} details!</h3>
+                </div>
+                <div class="panel-body">
+                    {{ wtf.quick_form(bioform) }}
+                </div>
+              </div>
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Create new listing</h3>
+                </div>
+                <div class="panel-body">
+                    {{ wtf.quick_form(listform) }}
+                </div>
+              </div>
+
+              <div class="listings">
+
+                {% for listing in listings %}
+                <div class="panel panel-default">
+                  <div class="panel-heading container-fluid">
+                    <div class="row">
+                      <div class="col-xs-8">
+                        <h3 class="panel-title center-block">{{ listing.header }}</h3>
+                      </div>
+                      <div class="col-xs-4 text-right">
+                        <div class="btn-group">
+                          <button type="button" class="btn dropdown-toggle btn-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Modify <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="{{ url_for('main.modify', action=1, user=current_user.id, listing=listing.id) }}">Modify</a></li>
+                            <li><a href="{{ url_for('main.delete', user=current_user.id, listing=listing.id) }}">Delete</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="panel-body">
+                    <p>{{listing.info}}</p>
+                  </div>
+                
+                  <table class="table">
+                    <tr>
+                      <th>Platform</th>
+                      <th>Game</th>
+                    </tr>
+                    <tr>
+                      <td>{{listing.platform}}</td>
+                      <td>{{listing.game}}</td>
+                    </tr>
+                  </table>
+
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
 </div>
 {% endblock %}
