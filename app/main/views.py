@@ -41,7 +41,6 @@ def find():
                         listings = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).filter(Listing.game == game_search).filter(User.country == country_search).order_by(desc(Listing.id)).all()
                     else:
                         listings = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).filter(Listing.game == game_search).filter(User.country == country_search).filter(User.city == city_search).order_by(desc(Listing.id)).all()
-            print(listings)
 
     return render_template('find.html', findform=findform, listings=listings)
 
@@ -129,4 +128,25 @@ def delete():
 @main.route('/admin')
 @login_required
 def admin():
-    return render_template('admin.html')
+    if current_user.role_id == 2:
+        return redirect(url_for('main.user'))
+    else:
+        users = User.query.filter_by(role_id = 2).all()
+        posts = {u.id: Listing.query.filter_by(user_id=u.id).count() for u in users}
+        if request.args.get('action'):
+            if request.args.get('action') == '1':
+                user = User.query.filter_by(id = int(request.args.get('user'))).first()
+                user.confirmed = False
+                db.session.commit()
+                return redirect(url_for('main.admin'))
+            if request.args.get('action') == '2':
+                user = int(request.args.get('user'))
+                delete_listing = Listing.query.filter_by(user_id = user).all()
+                delete_user = User.query.filter_by(id = user).first()
+                for l in delete_listing:
+                    db.session.delete(l)
+                db.session.commit()
+                db.session.delete(delete_user)
+                db.session.commit()
+                return redirect(url_for('main.admin'))
+    return render_template('admin.html', users=users, posts=posts)

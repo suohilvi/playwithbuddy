@@ -1,0 +1,4 @@
+/.env
+/app/__pycache__
+/app/main/__pycache__
+/app/auth/__pycache__

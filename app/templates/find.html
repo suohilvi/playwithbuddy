@@ -4,7 +4,7 @@
 {% block title %}Play with Buddy - Find buddy{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
+<div class="page-header  text-center">
     <h1>Search for buddies!</h1>
 </div>
 
@@ -18,7 +18,7 @@
                     <div class="col-xs-12 col-sm-12 text-center">
                       <div class="form-group">
                         {{ findform.game.label }}
-                        {{ findform.game(class_='field form-control') }}
+                        {{ findform.game(class_='field form-control game-list') }}
                       </div>
                     </div>
                     <div class="col-xs-6 col-sm-12 text-center">
@@ -63,7 +63,7 @@
                       <td>{{listing.User.country}}</td>
                     </tr>
                   </table>
-                  <h4>User bio</h4>
+                  <h4>User {{listing.User.username}} bio</h4>
                   <p>{{listing.User.bio}}</p>
                 </div>
               </div>

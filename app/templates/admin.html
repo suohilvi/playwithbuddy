@@ -3,11 +3,39 @@
 {% block title %}Play with Buddy - Admin{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
+<div class="page-header  text-center">
     <h1>Admin area!</h1>
 </div>
 <div class="page-content">
-    <p>This is the admin side</p>
-    <p>See all accounts and manipulate them.</p>
+    <p>Full user list</p>
+    <table id="data" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Confirmed</th>
+            <th>Posts no.</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.country }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.confirmed }}</td>
+                <td>{{ posts[user.id] }}</td>
+                <td>
+                    <a href="{{ url_for('main.admin', action=1, user=user.id) }}">UnConfirm</a>
+                    <a href="{{ url_for('main.admin', action=2, user=user.id) }}">Delete</a>
+                </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 </div>
 {% endblock %}

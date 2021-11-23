@@ -26,12 +26,6 @@ class DevelopmentConfig(Config):
     SSL_REDIRECT = False
 
 
-class TestingConfig(Config):
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
-    SSL_REDIRECT = False
-
-
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL').replace("://", "ql://", 1)
     SSL_REDIRECT = True
@@ -39,7 +33,6 @@ class ProductionConfig(Config):
 
 config = {
     'development': DevelopmentConfig,
-    'testing': TestingConfig,
     'production': ProductionConfig,
 
     'default': DevelopmentConfig
