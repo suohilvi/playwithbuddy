@@ -1083,7 +1083,7 @@ body {
   font-size: 15px;
   line-height: 1.42857143;
   color: #2c3e50;
-  background-color: #ffffff;
+  background-color: #bc18390a;
 }
 input,
 button,
@@ -2249,7 +2249,7 @@ pre code {
   }
 }
 table {
-  background-color: transparent;
+  background-color: #ffffff;
 }
 table col[class*="col-"] {
   position: static;
@@ -5369,7 +5369,7 @@ button.list-group-item-danger.active:focus {
   background-color: #ffffff;
   border: 1px solid transparent;
   border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.05);
 }
 .panel-body {
   padding: 15px;

@@ -18,10 +18,12 @@ def find():
     user_countries = User.query.with_entities(User.country).filter_by(role_id = 2).distinct()
     cities = User.query.with_entities(User.city).filter_by(role_id = 2).distinct()
     findform = FindForm()
+    page = request.args.get('page', 1, type=int)
     findform.game.choices = findform.game.choices+[(g.game, g.game) for g in games]
     findform.country.choices = findform.country.choices+[(c.country, c.country) for c in user_countries]
     findform.city.choices = findform.city.choices+[(k.city, k.city) for k in cities]
-    listings = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).order_by(desc(Listing.id)).all()
+    pagination = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).order_by(desc(Listing.id)).paginate(page, per_page=5, error_out=False)
+    listings = pagination.items
     if request.args.get('game'):
         game_search = request.args['game']
         country_search = request.args['country']
@@ -31,18 +33,21 @@ def find():
         findform.city.data = city_search
         if request.args['game'] != "None":
             if game_search == 'All':
-                listings = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).order_by(desc(Listing.id)).all()
+                pagination = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).order_by(desc(Listing.id)).paginate(page, per_page=5,error_out=False)
+                listings = pagination.items
             else:
                 if country_search == 'All':
-                    listings = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).filter(Listing.game == game_search).order_by(desc(Listing.id)).all()
+                    pagination = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).filter(Listing.game == game_search).order_by(desc(Listing.id)).paginate(page, per_page=5,error_out=False)
+                    listings = pagination.items
                 else:
                     if city_search == 'All':
-                        listings = Listing.query.filter_by(game = game_search).all()
-                        listings = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).filter(Listing.game == game_search).filter(User.country == country_search).order_by(desc(Listing.id)).all()
+                        pagination = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).filter(Listing.game == game_search).filter(User.country == country_search).order_by(desc(Listing.id)).paginate(page, per_page=5,error_out=False)
+                        listings = pagination.items
                     else:
-                        listings = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).filter(Listing.game == game_search).filter(User.country == country_search).filter(User.city == city_search).order_by(desc(Listing.id)).all()
+                        pagination = db.session.query(Listing, User).join(User, User.id==Listing.user_id).filter(User.confirmed == True).filter(Listing.game == game_search).filter(User.country == country_search).filter(User.city == city_search).order_by(desc(Listing.id)).paginate(page, per_page=5,error_out=False)
+                        listings = pagination.items
 
-    return render_template('find.html', findform=findform, listings=listings)
+    return render_template('find.html', findform=findform, listings=listings, pagination=pagination)
 
 @main.route('/user', methods=['GET', 'POST'])
 @login_required

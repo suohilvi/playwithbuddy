@@ -1,6 +1,33 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
+{% macro pagination_widget(pagination, endpoint) %}
+<ul class="pagination">
+  <li{% if not pagination.has_prev %} class="disabled"{% endif %}>
+    <a href="{% if pagination.has_prev %}{{ url_for(endpoint, page = pagination.page - 1, game=request.args.get('game'), country=request.args.get('country'), city=request.args.get('city')) }}{% else %}#{% endif %}">&laquo;</a>
+  </li>
+  {% for p in pagination.iter_pages(left_edge=1, left_current=2, right_current=2, right_edge=1) %}
+    {% if p %}
+      {% if p == pagination.page %}
+        <li class="active">
+          <a href="{{ url_for(endpoint, page = p, game=request.args.get('game'), country=request.args.get('country'), city=request.args.get('city')) }}">{{ p }}</a>
+        </li>
+      {% else %}
+        <li>
+          <a href="{{ url_for(endpoint, page = p, game=request.args.get('game'), country=request.args.get('country'), city=request.args.get('city')) }}">{{ p }}</a>
+        </li>
+      {% endif %}
+    {% else %}
+      <li class="disabled"><a href="#">&hellip;</a></li>
+    {% endif %}
+  {% endfor %}
+  <li{% if not pagination.has_next %} class="disabled"{% endif %}>
+    <a href="{% if pagination.has_next %}{{ url_for(endpoint, page = pagination.page + 1, game=request.args.get('game'), country=request.args.get('country'), city=request.args.get('city')) }}{% else %}#{% endif %}"> &raquo; </a>
+  </li>
+</ul>
+{% endmacro %}
+
+
 {% block title %}Play with Buddy - Find buddy{% endblock %}
 
 {% block page_content %}
@@ -44,9 +71,12 @@
         </div>
 
         <div class="col-xs-12 col-sm-8">
+          <div class="text-center">
+            {{ pagination_widget(pagination, '.find') }}
+          </div>
           {% for listing in listings %}
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading text-center">
                   <h3 class="panel-title">{{listing.Listing.header}}</h3>
                 </div>
                 <div class="panel-body">
@@ -68,8 +98,11 @@
                 </div>
               </div>
           {% endfor %}
+          <div class="text-center">
+            {{ pagination_widget(pagination, '.find') }}
+          </div>
         </div>
-
+        
     </div>
 </div>
 {% endblock %}

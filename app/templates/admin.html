@@ -2,13 +2,19 @@
 
 {% block title %}Play with Buddy - Admin{% endblock %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+{% endblock %}
+
 {% block page_content %}
 <div class="page-header  text-center">
     <h1>Admin area!</h1>
+    <h3>Customer control for account deactivation and deletion</h3>
 </div>
 <div class="page-content">
-    <p>Full user list</p>
-    <table id="data" class="table table-striped">
+    
+    <table id="data" class="table table-striped table-bordered">
         <thead>
           <tr>
             <th>Username</th>
@@ -38,4 +44,15 @@
         </tbody>
       </table>
 </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#data').DataTable();
+  });
+</script>
 {% endblock %}
