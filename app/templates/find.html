@@ -75,14 +75,14 @@
             {{ pagination_widget(pagination, '.find') }}
           </div>
           {% for listing in listings %}
-            <div class="panel panel-default">
+            <div class="panel panel-success">
                 <div class="panel-heading text-center">
                   <h3 class="panel-title">{{listing.Listing.header}}</h3>
                 </div>
                 <div class="panel-body">
                   <p>{{listing.Listing.info}}</p>
                   <table class="table">
-                    <tr>
+                    <tr class="active">
                       <th>Platform</th>
                       <th>Game</th>
                       <th>Country</th>

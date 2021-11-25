@@ -48,6 +48,10 @@
 {% endblock %}
 
 {% block content %}
+
+{% block left %}
+{% endblock %}
+
 <div class="container">
     {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">
@@ -58,6 +62,10 @@
 
     {% block page_content %}{% endblock %}
 </div>
+
+{% block right %}
+{% endblock %}
+
 {% endblock %}
 
 {% block scripts %}

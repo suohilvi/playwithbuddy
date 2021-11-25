@@ -2,7 +2,14 @@
 
 {% block title %}Play with Buddy{% endblock %}
 
+{% block left %}
+<div class="image image-left">
+    <img class="vertical" src="{{url_for('static', filename='vertic.png')}}" />
+</div>
+{% endblock %}
+
 {% block page_content %}
+
 <div class="page-header text-center">
     <h1>Welcome to Play with Buddy service!</h1>
 </div>
@@ -19,6 +26,17 @@
         <div class="col-xs-12 col-sm-6 link-button"><a href="find" class="btn btn-default btn-lg">Find a Buddy</a></div>
         <div class="col-xs-12 col-sm-6 link-button"><a href="user" class="btn btn-default btn-lg">Become a Buddy</a></div>
     </div>
+    <div class="row text justified">
+        <div class="col-xs-12">
+            <img class="horizontal img-responsive" src="{{url_for('static', filename='horiz.png')}}" />
+        </div>
+    </div>
 </div>
 
+{% endblock %}
+
+{% block right %}
+<div class="image image-right">
+    <img class="vertical img-responsive" src="{{url_for('static', filename='vertic.png')}}" />
+</div>
 {% endblock %}
