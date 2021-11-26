@@ -81,19 +81,34 @@
                 </div>
                 <div class="panel-body">
                   <p>{{listing.Listing.info}}</p>
-                  <table class="table">
-                    <tr class="active">
-                      <th>Platform</th>
-                      <th>Game</th>
-                      <th>Country</th>
-                      <th>City</th>
-                    </tr>
-                    <tr>
-                      <td>{{listing.Listing.platform}}</td>
-                      <td>{{listing.Listing.game}}</td>
-                      <td>{{listing.User.country}}</td>
-                      <td>{{listing.User.city}}</td>
-                    </tr>
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-6">
+                        <table class="table">
+                        <tr class="active">
+                          <th>Platform</th>
+                          <th>Game</th>
+                        </tr>
+                        <tr>
+                          <td>{{listing.Listing.platform}}</td>
+                          <td>{{listing.Listing.game}}</td>
+                        </tr>
+                        </table>  
+                      </div>
+                      <div class="col-xs-12 col-sm-6">
+                        <table class="table">
+                        <tr class="active">
+                          <th>Country</th>
+                          <th>City</th>
+                        </tr>
+                        <tr>
+                          <td>{{listing.User.country}}</td>
+                          <td>{{listing.User.city}}</td>
+                        </tr>
+                        </table> 
+                      </div>
+                    </div>
+                  </div>  
                   </table>
                   <h4>User {{listing.User.username}} bio</h4>
                   <p>{{listing.User.bio}}</p>
